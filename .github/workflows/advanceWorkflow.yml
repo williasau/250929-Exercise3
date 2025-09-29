@@ -1,0 +1,34 @@
+name: first workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  firstJob:
+    runs-on: self-hosted
+    steps:
+      - name: firstJob script
+        shell: cmd
+        run: echo Hello World! This is the first job
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Print to Log
+        id: print-to-log
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: ${{ inputs.who-to-greet }}
+      - name: time 
+        run: |
+          echo "The time of the greeting was at: ${{ steps.print-to-log.outputs.time }}"
+
+
+  secondJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: secondJob script
+        shell: bash
+        run: |
+          echo this is the second job
+          echo and this is a multi-line script
+          
+          
